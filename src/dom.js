@@ -1,4 +1,5 @@
 import h from 'virtual-dom/h'
+import svg from 'virtual-dom/virtual-hyperscript/svg'
 import RefHook from './ref-hook'
 import ComponentWidget from './component-widget'
 
@@ -26,6 +27,11 @@ export default function dom (tag, properties, ...children) {
     if (properties && properties.ref) {
       properties.ref = new RefHook(properties.ref)
     }
-    return h(tag, properties, children)
+
+    if (['svg', 'g', 'path'].includes(tag)) {
+      return svg(tag, properties, children)
+    } else {
+      return h(tag, properties, children)
+    }
   }
 }
